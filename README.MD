@@ -12,4 +12,7 @@ Study project for practice with **OCR** tasks by solving
 - [ ] Deploy the model
 
 ## Progress
-### Datacollection
+### Data collection
+- 1070 images from kaggle [dataset](https://www.kaggle.com/datasets/fournierp/captcha-version-2-images).
+- [Captcha](https://github.com/lepture/captcha) library for python.
+- Self-written captcha generator using `Numpy` and `OpenCV` libraries.
