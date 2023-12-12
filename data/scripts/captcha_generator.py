@@ -1,9 +1,8 @@
 import random
 import numpy as np
 import cv2
-import matplotlib.pyplot as plt
-
-from captcha_solver.data.generator_config import NOISE_PARAMS, CHARACTERS, NUMS, FONTS
+import argparse
+from generator_config import NOISE_PARAMS, CHARACTERS, NUMS, FONTS
 
 
 class ImageCaptchaGenerator:
@@ -86,28 +85,28 @@ class ImageCaptchaGenerator:
         warp_mat = cv2.getAffineTransform(src_mat, dst_mat)
         color = [np.random.rand() / 2 for _ in range(3)]
         font = random.choice(self._fonts)
-        cv2.putText(box, char, (0, N-N//3), font, 1.5, color=color, thickness=4)
+        cv2.putText(box, char, (0, N-N//3), font, 1.25, color=color, thickness=3)
         box = cv2.warpAffine(box, warp_mat, (N, N))
 
         return box
 
     def _create_sequence(self) -> str:
-        len = random.randint(self._min_length, self._max_length)
+        l = random.randint(self._min_length, self._max_length)
         seq = []
-        for _ in range(len):
+        for _ in range(l):
             seq.append(random.choice(random.choice([self._nums, self._characters])))
         return "".join(seq)
 
     def _create_captcha(self) -> tuple[np.ndarray, str]:
-        box_size = 50
+        box_size = 40
         captcha_bg = self._create_background()
         seq = self._create_sequence()
         cords = np.arange(0, self._width - box_size, (self._width - box_size) // len(seq))
         for char, pos in zip(seq, cords):
-            captcha_bg[self._height//2-25:self._height//2+25, pos:pos+50, :] += self._draw_character(char, box_size)
+            captcha_bg[self._height//2-20:self._height//2+20, pos:pos+40, :] += self._draw_character(char, box_size)
 
         captcha = self._create_noise_curve(captcha_bg)
-        return captcha.clip(0, 1), seq
+        return 255*captcha.clip(0, 1), seq
 
     def __iter__(self):
         return self
@@ -116,14 +115,23 @@ class ImageCaptchaGenerator:
         return self._create_captcha()
 
 
-""" TEST """
-gener = iter(ImageCaptchaGenerator(width=250, height=75, min_length=5, max_length=8, noise_level="low"))
-for i in range(3):
-    cpt, seq = next(gener)
-    fig = plt.figure()
-    fig.add_subplot().set_title(seq)
-    plt.axis('off')
-    plt.imshow(cpt)
-    plt.savefig(f'../figure/generated_captcha_{i}.png', bbox_inches='tight')
-
-
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--nums', default=10000, type=int, help='amount of images')
+    parser.add_argument('--width', default=200, type=int, help='width of captcha image')
+    parser.add_argument('--height', default=50, type=int, help='height of captcha image')
+    parser.add_argument('--min_length', default=5, type=int, help='min length of char sequence')
+    parser.add_argument('--max_length', default=8, type=int, help='max length of char sequence')
+    parser.add_argument('--noise_level', default='low', type=str, help='noise level low|medium|high')
+    parser.add_argument('--save_dir', default='./captcha_solver/data/captchas/', type=str, help='directory to save')
+    args = parser.parse_args()
+    captcha_images = iter(ImageCaptchaGenerator(width=args.width,
+                                                height=args.height,
+                                                min_length=args.min_length,
+                                                max_length=args.max_length,
+                                                noise_level=args.noise_level)
+                          )
+    for i in range(args.nums):
+        im, char_seq = next(captcha_images)
+        fpath = args.save_dir + char_seq + '.png'
+        cv2.imwrite(fpath, im)
