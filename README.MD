@@ -40,6 +40,6 @@ python captcha_solver/data/scripts/captcha_generator_2.py --num=2000 --min_lengt
 
 Examples is given below.
 - 
-![1](https://github.com/shchukinvov/captcha_solver/blob/main/figure/generated_captcha_0.png)
-![2](https://github.com/shchukinvov/captcha_solver/blob/main/figure/generated_captcha_1.png)
-![3](https://github.com/shchukinvov/captcha_solver/blob/main/figure/generated_captcha_2.png)
+![1](https://github.com/shchukinvov/captcha_solver/blob/main/figure/2bg48.png)
+![2](https://github.com/shchukinvov/captcha_solver/blob/main/figure/2C16.png)
+![3](https://github.com/shchukinvov/captcha_solver/blob/main/figure/2C518y.png)
