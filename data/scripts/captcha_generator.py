@@ -85,7 +85,7 @@ class ImageCaptchaGenerator:
         warp_mat = cv2.getAffineTransform(src_mat, dst_mat)
         color = [np.random.rand() / 2 for _ in range(3)]
         font = random.choice(self._fonts)
-        cv2.putText(box, char, (0, N-N//3), font, 1.25, color=color, thickness=3)
+        cv2.putText(box, char, (0, N-N//3), font, 1.4, color=color, thickness=3)
         box = cv2.warpAffine(box, warp_mat, (N, N))
 
         return box
@@ -98,12 +98,12 @@ class ImageCaptchaGenerator:
         return "".join(seq)
 
     def _create_captcha(self) -> tuple[np.ndarray, str]:
-        box_size = 40
+        box_size = 50
         captcha_bg = self._create_background()
         seq = self._create_sequence()
-        cords = np.arange(0, self._width - box_size, (self._width - box_size) // len(seq))
+        cords = np.arange(10, self._width - box_size, (self._width - box_size) // len(seq))
         for char, pos in zip(seq, cords):
-            captcha_bg[self._height//2-20:self._height//2+20, pos:pos+40, :] += self._draw_character(char, box_size)
+            captcha_bg[self._height//2-25:self._height//2+25, pos:pos+50, :] += self._draw_character(char, box_size)
 
         captcha = self._create_noise_curve(captcha_bg)
         return 255*captcha.clip(0, 1), seq

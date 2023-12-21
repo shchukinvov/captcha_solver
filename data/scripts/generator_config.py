@@ -40,8 +40,11 @@ NOISE_PARAMS = {
     }
 }
 
-CHARACTERS = "abcdefghiklmnopqrstvxyzABCDEFGHIKLMNOPQRSTVXYZ"
-NUMS = "123456789"
+CHARACTERS_LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+CHARACTERS_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+NUMS = "0123456789"
+CHARACTERS = CHARACTERS_LOWERCASE+CHARACTERS_UPPERCASE+NUMS
+CHAR_LIST = ["-"] + [ch for ch in CHARACTERS]
 FONTS = [0, 2, 3, 4, 16]
 """
 More details in https://docs.opencv.org/4.x/d6/d6e/group__imgproc__draw.html
