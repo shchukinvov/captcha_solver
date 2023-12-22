@@ -1,5 +1,6 @@
 # Models
 *.pth.tar
+*.pth
 
 # Images
 *.jpg
