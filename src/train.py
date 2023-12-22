@@ -1,4 +1,4 @@
-import torch.optim.lr_scheduler
+from captcha_solver.config import TRAIN_IMAGE_DIR, TEST_IMAGE_DIR
 from models import CaptchaSolverLSTM, CaptchaSolverAtt
 from dataset import init_dataloaders
 from loss_fn import CaptchaCTCLoss
@@ -18,8 +18,8 @@ def main():
     optimizer.load_state_dict(torch.load("../models/model1.pth")['optimizer'])
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.8)
     train_loader, val_loader, test_loader = init_dataloaders(
-        image_dir='../data/captchas',
-        test_image_dir='../data/test',
+        image_dir=TRAIN_IMAGE_DIR,
+        test_image_dir=TEST_IMAGE_DIR,
         train_transforms=TRAIN_TRANSFORMS,
         val_transforms=VAL_TRANSFORMS,
         batch_size=32,
@@ -36,6 +36,7 @@ def main():
         scheduler=scheduler
     )
     torch.save({"state_dict": model.state_dict(), "optimizer": optimizer.state_dict()}, "../models/model2.pth")
+    show_losses(train_loss, val_loss)
     test_cer, test_acc = validate_func(model, test_loader)
     print(test_cer, test_acc)
 
