@@ -8,8 +8,8 @@ Study project for practice with **OCR** tasks by solving
 ## Tasks
 - [x] Collect and prepare data
 - [x] Test different models and algorithms
-- [ ] Create inference tools
-- [ ] Deploy the model
+- [x] Create inference tools
+- [x] Deploy the model
 
 ## Progress
 ### Data collection
@@ -52,3 +52,8 @@ python captcha_solver/data/scripts/captcha_generator_2.py --num=2000 --min_lengt
 Achieved with **CNN** &#8594; **LSTM** &#8594; **FC layer** architecture.
 - `CER = 0.197`
 - `Accuracy = 0.75`
+
+### Deploy model
+The model is working [here](https://huggingface.co/spaces/shchukinvov/captcha_solver).
+Deployment code presented in `deploy` directory.
+
