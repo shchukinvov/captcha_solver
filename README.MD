@@ -54,6 +54,6 @@ Achieved with **CNN** &#8594; **LSTM** &#8594; **FC layer** architecture.
 - `Accuracy = 0.75`
 
 ### Deploy model
-The model is working [here](https://huggingface.co/spaces/shchukinvov/captcha_solver).
+Demo of the model presented [here](https://huggingface.co/spaces/shchukinvov/captcha_solver).
 Deployment code presented in `deploy` directory.
 
