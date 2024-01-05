@@ -2,7 +2,7 @@
 Solving some captchas using Neural Networks.
 
 ## Description
-Study project for practice with **OCR** tasks by solving 
+Project for practice with **OCR** tasks by solving 
 [captchas](https://en.wikipedia.org/wiki/CAPTCHA) using different CNN and RNN architectures.
 
 ## Tasks
